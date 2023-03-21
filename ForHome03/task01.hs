@@ -15,5 +15,5 @@ removeFistOccurrence num digit = helper num digit 0 0
     helper :: Int -> Int -> Int -> Int -> Int
     helper 0 _ _ result = result
     helper n d i result
-     | mod n 10 == d = helper (div n 10) (-1) (i) (result)
+     | mod n 10 == d = helper (div n 10) (-1) i (result)
      | otherwise = helper (div n 10) d (i + 1) (result + 10^i * mod n 10)

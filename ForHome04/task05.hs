@@ -10,4 +10,4 @@ main = do
     print $ isAscending 12332 == False
 
 isAscending :: Int -> Bool
-isAscending num = sort (map digitToInt (show num)) == (map digitToInt (show num))
+isAscending num = (sort $ show num) == show num

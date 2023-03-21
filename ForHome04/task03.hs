@@ -11,13 +11,7 @@ main = do
     print $ primesInRangeHOF 420 240 == [241,251,257,263,269,271,277,281,283,293,307,311,313,317,331,337,347,349,353,359,367,373,379,383,389,397,401,409,419]
 
 isPrime :: Int -> Bool
-isPrime n = n > 1 && helper 2
- where
-    helper :: Int -> Bool
-    helper d
-     | fromIntegral d > sqrt (fromIntegral n) = True
-     | mod n d == 0 = False
-     | otherwise = helper (d + 1)
+isPrime n = n > 1 && null (filter (\ x -> mod n x == 0) [2 .. div n 2])
 
 primesInRangeLC :: Int -> Int -> [Int]
 primesInRangeLC start end = [ x | x <- [min start end .. max start end], isPrime x && x > 100]

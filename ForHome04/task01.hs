@@ -12,11 +12,11 @@ main = do
 mySumRecNonPM :: [Int] -> Int
 mySumRecNonPM xs
  | null xs = 0
- | otherwise = (head xs) + mySumRecNonPM (tail xs)
+ | otherwise = head xs + mySumRecNonPM (tail xs)
 
 mySumRecPM :: [Int] -> Int
 mySumRecPM [] = 0
 mySumRecPM (x:xs) = x + mySumRecPM xs
 
 mySumFunc :: [Int] -> Int
-mySumFunc xs = sum xs
+mySumFunc = sum

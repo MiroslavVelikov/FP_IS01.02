@@ -13,16 +13,11 @@ main = do
     print $ isPresentFunc 0 [0, -1, 2] == True
 
 isPresentRecNonPM :: Int -> [Int] -> Bool
-isPresentRecNonPM num xs
- | null xs = False
- | num == head xs = True
- | otherwise = isPresentRecNonPM num (tail xs)
- 
+isPresentRecNonPM num xs = not (null xs) && (num == head xs || isPresentRecNonPM num (tail xs))
+
 isPresentRecPM :: Int -> [Int] -> Bool
 isPresentRecPM _ [] = False
-isPresentRecPM num (x:xs)
- | num == x = True
- | otherwise = isPresentRecPM num xs
+isPresentRecPM num (x:xs) = x == num || isPresentRecPM num xs
 
 isPresentFunc :: Int -> [Int] -> Bool
 isPresentFunc num = any (==num)
