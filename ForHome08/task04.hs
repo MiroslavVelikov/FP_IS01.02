@@ -13,14 +13,14 @@ data Shape a = Circle a | Rectangle a a | Triangle a a a | Cylinder a a
 
 area :: (Num a, Floating a) => Shape a -> a
 area (Circle n) = pi * n^2
-area (Rectangle a b) = a * b
-area (Triangle a b c) = sqrt(p * (p - a) * (p - b) * (p - c))
+area (Rectangle x y) = x * y
+area (Triangle x y z) = sqrt $ p * (p - x) * (p - y) * (p - z)
  where
-    p = (a + b + c) / 2
+    p = (x + y + z) / 2
 area (Cylinder r h) = 2 * pi * r * (h + r)
 
 getAreas :: (Num a, Floating a) => [Shape a] -> [a]
-getAreas xs = [ area x | x <- xs ]
+getAreas = map (\ x -> area x)
 
 maxArea :: (Num a, Floating a, Ord a) => [Shape a] -> (Shape a)
-maxArea xs = snd $ foldl1 (\ acc@(maxArea, _) (area, shape) -> if area > maxArea then (area, shape) else acc) [ (area x, x) | x <- xs ]
+maxArea = foldl1 (\ biggestShape curShape -> if area biggestShape < area curShape then curShape else biggestShape)

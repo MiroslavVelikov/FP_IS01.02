@@ -19,14 +19,14 @@ data Shape a = Circle a | Rectangle a a | Triangle a a a | Cylinder a a
  
 perimeter :: (Num a, Floating a) => Shape a -> a
 perimeter (Circle n) = 2 * pi * n
-perimeter (Rectangle a b) = 2 * (a + b)
-perimeter (Triangle a b c) = a + b + c
+perimeter (Rectangle x y) = 2 * (x + y)
+perimeter (Triangle x y z) = x + y + z
 perimeter (Cylinder r h) = 4 * r + 2 * h
  
 area :: (Num a, Floating a) => Shape a -> a
 area (Circle n) = pi * n^2
-area (Rectangle a b) = a * b
-area (Triangle a b c) = sqrt(p * (p - a) * (p - b) * (p - c))
+area (Rectangle x y) = x * y
+area t@(Triangle x y z) = sqrt $ p * (p - x) * (p - y) * (p - z)
  where
-    p = perimeter (Triangle a b c) / 2
+    p = perimeter t / 2
 area (Cylinder r h) = 2 * pi * r * (h + r)
