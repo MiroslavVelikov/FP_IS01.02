@@ -20,7 +20,7 @@ area (Triangle x y z) = sqrt $ p * (p - x) * (p - y) * (p - z)
 area (Cylinder r h) = 2 * pi * r * (h + r)
 
 getAreas :: (Num a, Floating a) => [Shape a] -> [a]
-getAreas = map (\ x -> area x)
+getAreas = map area
 
 maxArea :: (Num a, Floating a, Ord a) => [Shape a] -> (Shape a)
 maxArea = foldl1 (\ biggestShape curShape -> if area biggestShape < area curShape then curShape else biggestShape)
