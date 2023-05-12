@@ -51,9 +51,6 @@ db :: MovieDB
 db = (movies, studios, movieExecs)
 
 --Task01--
--- getLenOfLongestMoive :: [Movie] -> (Title, Length)
--- getLenOfLongestMoive ms = foldl1 (\ acc@(_, maxLen) (title, len) -> if maxLen < len then (title, len) else acc) [(title, len) | (title, _, len, inColor, _) <- ms, inColor == 'Y']  
-
 getNameLengthColor :: MovieDB -> ((Char -> Bool), (Int -> Bool)) -> [(Title, Length)]
 getNameLengthColor (ms, _, _) (mType, mLen) = let longenstMovie = foldl1 (\ acc@(_, maxLen) (title, len) -> if maxLen < len then (title, len) else acc) [(title, len) | (title, _, len, inColor, _) <- ms, inColor == 'Y'] in [ (title, len) | (title, _, len, inColor, _) <- ms, mType inColor && mLen len && len /= snd longenstMovie && len > 0 ]
 --Task01 END--
@@ -61,13 +58,13 @@ getNameLengthColor (ms, _, _) (mType, mLen) = let longenstMovie = foldl1 (\ acc@
 sameStudio :: Movie -> Movie -> Bool 
 sameStudio (_, _, _, _, studio1) (_, _, _, _, studio2) = studio1 == studio2    
 
-removeDuplicates :: [Movie] -> [Movie]
-removeDuplicates grouped
- | length grouped > 1 = filter (\(title, year, _, _, _) -> all (\(_, y, _, _, _) -> y == year) grouped) grouped
- | otherwise = grouped
-
 removeDifferentYears :: [Movie] -> [Movie]
 removeDifferentYears = concatMap removeDuplicates . groupBy sameStudio
+ where
+    removeDuplicates :: [Movie] -> [Movie]
+    removeDuplicates groupedMovies
+     | length groupedMovies > 1 = filter (\(title, year, _, _, _) -> all (\(_, y, _, _, _) -> y == year) groupedMovies) groupedMovies
+     | otherwise = groupedMovies
 
 getStudiosWithoutMovies :: MovieDB -> [(StudioName, Name)]
 getStudiosWithoutMovies (ms, ss, mes) = [(studioName, execName) | (execName, stID, _) <- mes, (studioName, studioID) <- (filter (\ (studioName, _) -> not $ any (\ (_, _, _, _, stName) -> stName == studioName) ms) ss), stID == studioID] 
