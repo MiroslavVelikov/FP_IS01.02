@@ -23,13 +23,3 @@ findUncles ts ch = helper ts
     helper tempTs
      | elem ch (snd $ head tempTs) = filter (\ x -> x /= (fst $ head tempTs)) (getBrothers ts (fst $ head tempTs))
      | otherwise = helper (tail tempTs)
-   
- 
--- -- findUncles :: Tree -> Int -> [Int]
--- findUncles ts ch = helper ts []
---  where
---     -- helper :: Tree -> [[Int]] -> [Int]
---     helper [] _ = []
---     helper tree res
---      | elem ch (snd (head tree)) = res
---      | otherwise = helper (tail tree) ((snd $ head tree) : res)
