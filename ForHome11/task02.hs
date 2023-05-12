@@ -19,7 +19,7 @@ colorTree = Node Blue (Node Red (Node Green Empty Empty) Empty) (Node Red (Node 
 
 minDepthGreenNode :: Tree -> Int
 minDepthGreenNode Empty = 0
-minDepthGreenNode tree = minimum $ filter (\ x -> x > 0) $ helper tree 0
+minDepthGreenNode tree = minimum $ filter (> 0) $ helper tree 0
  where
     helper :: Tree -> Int -> [Int]
     helper Empty _ = [0]
