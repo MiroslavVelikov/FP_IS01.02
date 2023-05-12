@@ -1,16 +1,17 @@
 main :: IO()
 main = do
-    print $ maxDepthBlueNode colorTree-- == 2
+    print $ maxDepthBlueNode colorTree == 2
 
 data Color = Red | Green | Blue
 data Tree = Empty | Node Color Tree Tree
-maxDepthBlueNode :: Tree -> [Int]
-maxDepthBlueNode Empty = [0]
-maxDepthBlueNode tree = helper tree 0
+
+maxDepthBlueNode :: Tree -> Int
+maxDepthBlueNode Empty = 0
+maxDepthBlueNode tree = maximum $ helper tree 0
  where
     helper :: Tree -> Int -> [Int]
-    helper Empty _ = [0]
-    helper (Node Blue _ _) i = [i]
+    helper Empty _ = [-1]
+    helper (Node Blue left right) i = [i] ++ (helper left (i + 1)) ++ (helper right (i + 1)) 
     helper (Node _ left right) i = (helper left (i + 1)) ++ (helper right (i + 1))
 
 --        Blue
