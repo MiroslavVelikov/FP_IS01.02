@@ -51,11 +51,11 @@ db :: MovieDB
 db = (movies, studios, movieExecs)
 
 --Task01--
-getLenOfLongestMoive :: [Movie] -> (Title, Length)
-getLenOfLongestMoive ms = foldl1 (\ acc@(_, maxLen) (title, len) -> if maxLen < len then (title, len) else acc) [(title, len) | (title, _, len, inColor, _) <- ms, inColor == 'Y']  
+-- getLenOfLongestMoive :: [Movie] -> (Title, Length)
+-- getLenOfLongestMoive ms = foldl1 (\ acc@(_, maxLen) (title, len) -> if maxLen < len then (title, len) else acc) [(title, len) | (title, _, len, inColor, _) <- ms, inColor == 'Y']  
 
 getNameLengthColor :: MovieDB -> ((Char -> Bool), (Int -> Bool)) -> [(Title, Length)]
-getNameLengthColor (ms, _, _) (mType, mLen) = let longenstMovie = getLenOfLongestMoive ms in [ (title, len) | (title, _, len, inColor, _) <- ms, mType inColor && mLen len && len /= snd longenstMovie && len > 0 ]
+getNameLengthColor (ms, _, _) (mType, mLen) = let longenstMovie = foldl1 (\ acc@(_, maxLen) (title, len) -> if maxLen < len then (title, len) else acc) [(title, len) | (title, _, len, inColor, _) <- ms, inColor == 'Y'] in [ (title, len) | (title, _, len, inColor, _) <- ms, mType inColor && mLen len && len /= snd longenstMovie && len > 0 ]
 --Task01 END--
 --Task02--
 sameStudio :: Movie -> Movie -> Bool 

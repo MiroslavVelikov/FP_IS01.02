@@ -2,8 +2,8 @@ import Data.List
 
 main :: IO()
 main = do
-    print $ height numberBTree-- == 4
-    print $ height charBTree-- == 3
+    print $ height numberBTree == 4
+    print $ height charBTree == 3
 
     print $ average numberBTree == 16.22
     --print $ average charBTree -- should not work
@@ -31,14 +31,13 @@ main = do
 data BTree a = Nil | Node a (BTree a) (BTree a)
  deriving (Show, Eq)
 
--- height :: BTree a -> Int
--- length $ foldl1 (\ x y -> if length x > length y then x else y) $ 
-height Nil = []
-height tree = helper tree
+height :: BTree a -> Int
+height Nil = 0
+height tree = maximum $ helper tree 0
  where
-    -- helper :: BTree a -> [Int]
-    helper Nil = []
-    helper (Node value left right) = [(1 : (helper left)), (1 : (helper right))]   
+    helper :: BTree a -> Int -> [Int]
+    helper Nil i = [i]
+    helper (Node _ left right) i = (helper left (i + 1)) ++ (helper right (i + 1))
 
 size :: (Num a) => BTree a -> a
 size Nil = 0
