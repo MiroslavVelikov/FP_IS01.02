@@ -33,11 +33,7 @@ data BTree a = Nil | Node a (BTree a) (BTree a)
 
 height :: BTree a -> Int
 height Nil = 0
-height tree = maximum $ helper tree 0
- where
-    helper :: BTree a -> Int -> [Int]
-    helper Nil i = [i]
-    helper (Node _ left right) i = (helper left (i + 1)) ++ (helper right (i + 1))
+height (Node _ left right) = 1 + max (height left) (height right)
 
 size :: (Num a) => BTree a -> a
 size Nil = 0
@@ -60,12 +56,7 @@ sumLeaves (Node value left right)
  | otherwise = (sumLeaves left) + (sumLeaves right)
 
 areEqual :: (Eq a) => BTree a -> BTree a -> Bool
-areEqual Nil Nil = True
-areEqual Nil _ = False
-areEqual _ Nil = False
-areEqual (Node v1 l1 r1) (Node v2 l2 r2)
- | v1 == v2 = (areEqual l1 l2) && (areEqual r1 r2)
- | otherwise = False
+areEqual t1 t2 = t1 == t2
 
 setLevels :: (Num b) => BTree a -> BTree (b, a)
 setLevels tree = helper tree 0
